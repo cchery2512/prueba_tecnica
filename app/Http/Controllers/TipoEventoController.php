@@ -5,58 +5,52 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTipoEventoRequest;
 use App\Http\Requests\UpdateTipoEventoRequest;
 use App\Models\TipoEvento;
-
+use Illuminate\Http\Request;
 
 class TipoEventoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return TipoEvento::orderBy('id')->get();
+        $tipos = TipoEvento::all();
+
+        return view('tipoEvento.list', compact('tipos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function create()
+    {
+    }
+
     public function store(StoreTipoEventoRequest $request)
     {
         $data = $request->validated();
 
         $tipoEvento = TipoEvento::create($data);
 
-        $tipoEvento->find($tipoEvento->id);
+        $tipos = TipoEvento::all();
 
-        return response()->json($tipoEvento);
+        return view('tipoEvento.list', compact('tipos'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(TipoEvento $tipoEvento)
     {
-        return $tipoEvento;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTipoEventoRequest $request, TipoEvento $tipoEvento)
+    public function edit(TipoEvento $tipoEvento)
+    {
+    }
+
+    public function update(UpdateTipoEventoRequest $request, TipoEvento $tipoevento)
     {
         $data = $request->validated();
 
-        $tipoEvento->update($data);
+        $tipoevento->update($data);
 
-        return response()->json($tipoEvento);
+        return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(TipoEvento $tipoEvento)
+    public function destroy(TipoEvento $tipoevento)
     {
-        $tipoEvento->delete();
-        return TipoEvento::orderBy('id')->get();
+        $tipoevento->delete();
+        return redirect()->back();
     }
 }

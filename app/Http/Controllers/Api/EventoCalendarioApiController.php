@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventoCalendarioRequest;
 use App\Http\Requests\UpdateEventoCalendarioRequest;
 use App\Models\EventoCalendario;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
-class EventoCalendarioController extends Controller
+class EventoCalendarioApiController extends Controller
 {
         /**
      * Display a listing of the resource.

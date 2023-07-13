@@ -1,20 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrarRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 
-class UserController extends Controller
+class UserApiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $user = User::paginate();
-        return view('user.list')->with('usuarios', $user);
+        User::orderBy('id')->get();
     }
 
     /**
@@ -26,8 +23,9 @@ class UserController extends Controller
 
         $user = User::create($data);
 
-        $user = User::paginate();
-        return view('user.list')->with('usuarios', $user);
+        $user->find($user->id);
+
+        return response()->json($user);
     }
 
     /**
@@ -47,8 +45,7 @@ class UserController extends Controller
 
         $usuario->update($data);
 
-        return redirect()->back();
-
+        return response()->json($usuario);
     }
 
     /**
@@ -57,6 +54,6 @@ class UserController extends Controller
     public function destroy(User $usuario)
     {
         $usuario->delete();
-        return redirect()->back();
+        return User::orderBy('id')->get();
     }
 }
